@@ -11,6 +11,6 @@
             {{Form::textarea('body', $post->body, ['class' => 'form-control', 'placeholder' => 'Enter Body Text'])}}
         </div>
         {{Form::hidden('_method', 'PUT')}}
-        {{Form::submit('Submit', ['class' => 'btn btn-secondary'])}}
+        {{Form::submit('Submit', ['class' => 'btn btn-info'])}}
     {!! Form::close() !!}
 @endsection
