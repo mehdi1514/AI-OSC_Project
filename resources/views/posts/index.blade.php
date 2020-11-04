@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Posts</h1><br>
+    <h1>Feedback</h1><br>
     @if(count($posts) > 0)
         @foreach ($posts as $post)
             <div class="card bg-light" style="margin-top: 10px; margin-bottom:10px; padding: 10px">
@@ -11,6 +11,6 @@
         @endforeach
         {{$posts->links('inc.pagination')}}
     @else
-        <p>No posts found</p>
+        <p>No feedback found</p>
     @endif
 @endsection

@@ -53,7 +53,10 @@
                 <a class="nav-link" href="/services">Services</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/posts">Blog</a>
+                <a class="nav-link" href="/posts">Feedback</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/doctors">Doctors</a>
               </li>
             </ul>
 
@@ -71,7 +74,7 @@
                     @endif
                 @else
                     
-                    <li class="nav-item"><a href="/home" class="nav-link">My Posts</a></li>
+                    <li class="nav-item"><a href="/home" class="nav-link">My Feedback</a></li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}

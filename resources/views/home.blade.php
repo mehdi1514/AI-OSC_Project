@@ -3,7 +3,7 @@
 @section('content')
 <br>
 <div class="container">
-    <a href="/posts/create" class="btn btn-secondary float-right">+ Create Post</a>
+    <a href="/posts/create" class="btn btn-secondary float-right">+ Give Feedback</a>
 <!--    
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -45,7 +45,7 @@
             @endforeach
         </table>
     @else
-        <p style="font-size: 25px;">You haven't created any posts yet🙁</p>
+        <p style="font-size: 25px;">You haven't given any feedback yet🙁</p>
     @endif
     
 </div>
