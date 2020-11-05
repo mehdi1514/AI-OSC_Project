@@ -12,4 +12,8 @@ class Doctor extends Model
     protected $table = 'doctors';
     public $primaryKey = 'id';
     public $timestamps = true;
+
+    public function appointments(){
+        return $this->hasMany('App\Models\Appointment');
+    }
 }

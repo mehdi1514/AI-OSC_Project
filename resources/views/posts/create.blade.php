@@ -10,6 +10,10 @@
             {{Form::label('body', 'Body')}}
             {{Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Enter Body Text'])}}
         </div>
+        <div class="form-group">
+            {{Form::label('doctor', 'Doctor')}}
+            {{Form::text('doctor', '', ['class' => 'form-control', 'placeholder' => 'Enter Doctor'])}}
+        </div>
         {{Form::submit('Submit', ['class' => 'btn btn-info'])}}
     {!! Form::close() !!}
 @endsection

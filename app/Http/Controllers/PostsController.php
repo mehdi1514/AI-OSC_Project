@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use DB;
 
 class PostsController extends Controller
 {
@@ -25,7 +26,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -49,15 +50,19 @@ class PostsController extends Controller
     {
         $this->validate($request,[
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'doctor' => 'required'
         ]);
         $post = new Post();
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
+        $d_name = $request->input('doctor');
+        $d_id = DB::table('doctors')->where('name', $d_name)->pluck('id');
+        $post->doctor_id = $d_id[0];
         $post->save();
 
-        return redirect('/posts')->with('success', 'Post Created!');
+        return redirect('/posts')->with('success', 'Feedback Given!');
     }
 
     /**
@@ -102,7 +107,7 @@ class PostsController extends Controller
         $post->body = $request->input('body');
         $post->save();
 
-        return redirect('/posts')->with('success', 'Post Updated Successfully!');
+        return redirect('/posts')->with('success', 'Feedback Updated Successfully!');
     }
 
     /**
@@ -115,6 +120,6 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
-        return redirect('/posts')->with('success', 'Poist Deleted Successfully');
+        return redirect('/posts')->with('success', 'Feedback Deleted Successfully');
     }
 }

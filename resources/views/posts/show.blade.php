@@ -5,7 +5,7 @@
     <h1 class="display-4">{{$post->title}}</h1>
     <p>{{$post->body}}</p>
     <hr>
-    <small>Written on {{$post->created_at}} by {{$post->user->name}}</small>
+    <small>Written on {{$post->created_at}} by {{$post->user->name}} for Dr. {{$post->doctor->name}}</small>
     <br>
     @if (!Auth::guest())
         @if (Auth::user()->id == $post->user_id)

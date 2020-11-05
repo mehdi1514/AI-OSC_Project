@@ -131,7 +131,7 @@ class DoctorsController extends Controller
         if($request->input('specialization'))
         {
             $specialization = $request->input('specialization');
-            $doctors = Doctor::find($specialization);
+            $doctors = Doctor::where('specialization', $specialization)->paginate(5);
             return view('doctors.search')->with('doctors', $doctors);
         }
         return redirect('/doctors')->with('error', 'Search input was empty');
