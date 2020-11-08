@@ -23,10 +23,14 @@
                             {{Form::open(['action' => ['AppointmentsController@mark_as_done', $appointment->id], 'method' => 'GET', 'class' => 'float-right'])}}
                                 {{Form::submit('Mark as Done', ['class' => 'btn btn-success'])}}
                             {{Form::close()}}
+                        @else
+                            <a href="" class="btn btn-warning float-right">Appointment Done</a>
                         @endif
                     @else
                         @if($appointment->complete == true)
                             <a href="/posts/create" class="btn btn-success float-right">Give Feedback</a>
+                        {{-- @else
+                            <a href="/posts/update/{{$appointment->post_id}}" class="btn btn-success float-right">Give Feedback</a> --}}
                         @endif
                     @endif
 
