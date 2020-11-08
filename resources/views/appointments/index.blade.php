@@ -17,6 +17,20 @@
                 <h3 style="color: #2EBCD4">{{"Dr. " . $appointment->doctor->name}}</h3>
                 <h6 style="color: gray">{{$appointment->timeslot}}</h6>
                 <a href="/appointments/{{$appointment->id}}" class="btn btn-info">Details</a>
+                @if (!Auth::guest())
+                    @if (Auth::user()->email == 'admin@gmail.com')
+                        @if($appointment->complete == false)
+                            {{Form::open(['action' => ['AppointmentsController@mark_as_done', $appointment->id], 'method' => 'GET', 'class' => 'float-right'])}}
+                                {{Form::submit('Mark as Done', ['class' => 'btn btn-success'])}}
+                            {{Form::close()}}
+                        @endif
+                    @else
+                        @if($appointment->complete == true)
+                            <a href="/posts/create" class="btn btn-success float-right">Give Feedback</a>
+                        @endif
+                    @endif
+
+                @endif
             </div>
         @endforeach
         {{-- {{$appointments->links('inc.pagination')}} --}}
@@ -30,3 +44,4 @@
         @endif
     @endif --}}
 @endsection
+

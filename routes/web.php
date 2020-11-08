@@ -18,6 +18,7 @@ Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 Route::resource('posts', 'PostsController');
 Route::get('/doctors/search', 'DoctorsController@search');
+Route::get('/appointments/mark_as_done/{id}', 'AppointmentsController@mark_as_done');
 Route::get('/appointments/create/{doctor_id}/{timeslot}', 'AppointmentsController@create');
 Route::resource('doctors', 'DoctorsController');
 Route::resource('appointments', 'AppointmentsController');

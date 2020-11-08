@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Doctor;
+use App\Models\Post;
+use App\Models\Appointment;
 
 class HomeController extends Controller
 {
@@ -25,6 +27,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user_email = auth()->user()->email;
+
+        if($user_email == 'admin@gmail.com')
+        {
+            $apps = Appointment::all();
+            return view('appointments.index')->with('appointments', $apps);
+        }
+
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
         return view('appointments.index')->with('appointments', $user->appointments);

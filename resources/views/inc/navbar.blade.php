@@ -76,9 +76,9 @@
                     @endif
                 @else
                     
-                    <li class="nav-item"><a href="/home" class="nav-link">My Feedback</a></li>
+                    <li class="nav-item"><a href="/posts" class="nav-link">My Feedback</a></li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/appointments">My Appointments</a>
+                      <a class="nav-link" href="/home">My Appointments</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
