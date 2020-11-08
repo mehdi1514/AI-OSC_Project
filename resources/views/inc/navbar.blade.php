@@ -41,8 +41,9 @@
             <ul class="navbar-nav mr-auto">
 
             </ul>
-
+            
             <ul class="navbar-nav mr-auto">
+              <!--
               <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
               </li>
@@ -52,6 +53,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="/services">Services</a>
               </li>
+              -->
               <li class="nav-item">
                 <a class="nav-link" href="/posts">Feedback</a>
               </li>

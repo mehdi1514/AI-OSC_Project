@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use DB;
 use App\Http\Controllers\Auth;
 use App\Models\User;
+use App\Models\Doctor;
 
 class AppointmentsController extends Controller
 {
@@ -28,7 +29,7 @@ class AppointmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($doctor_id, $timeslot)
+    public function create()
     {
         // if(Auth::guest())
         //     return redirect('/login')->with('error', 'You must first login or create an account to make an appointment!'); 
@@ -36,13 +37,12 @@ class AppointmentsController extends Controller
         // $this->validate($request, [
         //     'timeslot' => 'required'
         // ]);
-        $appointment = new Appointment();
-        $appointment->timeslot = $timeslot;
-        $appointment->doctor_id = $doctor_id;
-        $appointment->user_id = auth()->user()->id;
-        $appointment->save();
-
-        return redirect('/appointments')->with('success', 'Appointment booked!');
+        $results = Doctor::all();
+        $doctors = array();
+        foreach($results as $result){
+            $doctors[$result->id] = "Dr. " . $result->name . "(" . $result->specialization . ")";
+        }
+        return view('appointments.create')->with('doctors', $doctors);
     }
 
     /**
@@ -53,7 +53,27 @@ class AppointmentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'doctor' => 'required',
+            'time_slot' => 'required',
+            'date' => 'required'
+        ];
+    
+        $customMessages = [
+            'doctor.required' => 'Please select a doctor',
+            'time_slot.required' => 'Please select a time slot',
+            'date.required' => 'Please select a date',
+        ];
+    
+        $this->validate($request, $rules, $customMessages);
+        $appointment = new Appointment();
+        $appointment->timeslot = $request->input('time_slot');
+        $appointment->doctor_id = $request->input('doctor');
+        $appointment->user_id = auth()->user()->id;
+        $appointment->date = $request->input('date');
+        $appointment->save();
+
+        return redirect('/appointments')->with('success', 'Appointment booked!');
     }
 
     /**
@@ -64,7 +84,9 @@ class AppointmentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $doctor = Doctor::find($appointment->doctor_id);
+        return view('appointments.show')->with('appointment', $appointment)->with('doctor', $doctor);
     }
 
     /**
@@ -75,7 +97,14 @@ class AppointmentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $results = Doctor::all();
+        $doctors = array();
+        foreach($results as $result){
+            $doctors[$result->id] = "Dr. " . $result->name . "(" . $result->specialization . ")";
+        }
+        $doctor = Doctor::find($appointment->doctor_id);
+        return view('appointments.edit')->with('appointment', $appointment)->with('doctors', $doctors)->with('doctor', $doctor);
     }
 
     /**
@@ -87,7 +116,27 @@ class AppointmentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'doctor' => 'required',
+            'time_slot' => 'required',
+            'date' => 'required'
+        ];
+    
+        $customMessages = [
+            'doctor.required' => 'Please select a doctor',
+            'time_slot.required' => 'Please select a time slot',
+            'date.required' => 'Please select a date',
+        ];
+    
+        $this->validate($request, $rules, $customMessages);
+        $appointment = Appointment::find($id);
+        $appointment->timeslot = $request->input('time_slot');
+        $appointment->doctor_id = $request->input('doctor');
+        $appointment->user_id = auth()->user()->id;
+        $appointment->date = $request->input('date');
+        $appointment->save();
+
+        return redirect('/appointments')->with('success', 'Successfully made changes to your appointment');
     }
 
     /**
@@ -98,6 +147,8 @@ class AppointmentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $appointment->delete();
+        return redirect('/appointments')->with('success', 'Your appointment has been cancelled');
     }
 }

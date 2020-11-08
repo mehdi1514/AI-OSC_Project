@@ -9,13 +9,14 @@
         </div>
         {{Form::submit('Submit', ['class' => 'btn btn-info'])}}
     {!! Form::close() !!} --}}
-
+    <a href="appointments/create" class="btn btn-info float-right">Book an Appointment</a>
+    <br><br>
     @if(count($appointments) > 0)
         @foreach ($appointments as $appointment)
-            <div class="card bg-light" style="margin-top: 10px; margin-bottom:10px; padding: 10px">
-                <h3 style="color: #2EBCD4">{{$appointment->timeslot}}</h3>
-                <h3 style="color: #2EBCD4">{{$appointment->doctor->name}}</h3>
-                <small>Appointment made on {{$appointment->created_at}}</small>
+            <div class="shadow p-3 mb-5 bg-white rounded" style="margin-top: 10px; margin-bottom:10px; padding: 10px">
+                <h3 style="color: #2EBCD4">{{"Dr. " . $appointment->doctor->name}}</h3>
+                <h6 style="color: gray">{{$appointment->timeslot}}</h6>
+                <a href="/appointments/{{$appointment->id}}" class="btn btn-info">Details</a>
             </div>
         @endforeach
         {{-- {{$appointments->links('inc.pagination')}} --}}
