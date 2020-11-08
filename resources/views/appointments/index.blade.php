@@ -30,7 +30,7 @@
                         @if($appointment->complete == true)
                             <a href="/posts/create" class="btn btn-success float-right">Give Feedback</a>
                         {{-- @else
-                            <a href="/posts/update/{{$appointment->post_id}}" class="btn btn-success float-right">Give Feedback</a> --}}
+                            <a href="/posts/update/{{$appointment->post_id}}" class="btn btn-success float-right">Edit Feedback</a> --}}
                         @endif
                     @endif
 
