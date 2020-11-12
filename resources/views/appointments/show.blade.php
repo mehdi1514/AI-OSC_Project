@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <a href="/appointments" class="btn btn-default">Go Back</a>
     <h2>{{"Dr. " . $doctor->name}}</h2>
     <h4>{{"Specialization: " . $doctor->specialization}}</h4>
     <p style="font-size: 16px">{{"Email: " . $doctor->email}}</p>

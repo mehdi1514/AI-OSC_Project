@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\Appointment;
+use App\Models\Post;
 use DB;
 
 class DoctorsController extends Controller
@@ -115,8 +117,14 @@ class DoctorsController extends Controller
     public function destroy($id)
     {
         $doctor = Doctor::find($id);
-        $doctor->delete();
-        return redirect('/doctors')->with('success', 'Doctor Info Deleted Successfully');
+        $app_avail = DB::table('appointments')->where('doctor_id', '=', $doctor->id)->get();
+        $post_avail = DB::table('posts')->where('doctor_id', '=', $doctor->id)->get();
+        if(count($app_avail) == 0 && count($post_avail) == 0)
+        {
+            $doctor->delete();
+            return redirect('/doctors')->with('success', 'Doctor Info Deleted Successfully');
+        }
+        return redirect('/doctors')->with('error', 'Dr. '.$doctor->name.' has an appointment or post to his name');
     }
 
     /**

@@ -10,7 +10,7 @@
                 <small>Written on {{$post->created_at}} by {{$post->user->name}} for Dr. {{$post->doctor->name}}</small>
             </div>
         @endforeach
-        {{$posts->links('inc.pagination')}}
+        {{-- {{$posts->links('inc.pagination')}} --}}
     @else
         <p>No feedback found</p>
     @endif

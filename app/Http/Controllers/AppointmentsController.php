@@ -48,7 +48,7 @@ class AppointmentsController extends Controller
         $results = Doctor::all();
         $doctors = array();
         foreach($results as $result){
-            $doctors[$result->id] = "Dr. " . $result->name . "(" . $result->specialization . ")";
+            $doctors[$result->id] = "Dr. " . $result->name . " (" . $result->specialization . ")";
         }
         return view('appointments.create')->with('doctors', $doctors);
     }
