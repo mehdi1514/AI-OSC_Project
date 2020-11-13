@@ -39,6 +39,9 @@ class PostsController extends Controller
      */
     public function create()
     {
+        // if(!auth()->user())
+        //     return redirect('/login')->with('error', 'You must first login or create an account to make an appointment!'); 
+
         $user_id = auth()->user()->id;
         $apps = DB::table('appointments')->where('user_id', '=', $user_id)->pluck('complete');
         foreach($apps as $app)

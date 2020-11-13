@@ -18,6 +18,9 @@ class AppointmentsController extends Controller
      */
     public function index()
     {
+        if(!auth()->user())
+            return redirect('/login')->with('error', 'You must first login or create an account to make an appointment!'); 
+            
         $user_email = auth()->user()->email;
 
         if($user_email == 'admin@gmail.com')
@@ -39,8 +42,8 @@ class AppointmentsController extends Controller
      */
     public function create()
     {
-        // if(Auth::guest())
-        //     return redirect('/login')->with('error', 'You must first login or create an account to make an appointment!'); 
+        if(!auth()->user())
+            return redirect('/login')->with('error', 'You must first login or create an account to make an appointment!'); 
 
         // $this->validate($request, [
         //     'timeslot' => 'required'

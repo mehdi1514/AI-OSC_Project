@@ -3,7 +3,9 @@
 @section('content')
     <h1>Doctors</h1><br>
 
-    <a href="/appointments/create" class="btn btn-primary float-right">Book Appointment</a>
+    @if(!Auth::guest())
+        <a href="/appointments/create" class="btn btn-primary float-right">Book Appointment</a>
+    @endif
     <a href="/doctors" class="btn btn-info">Go Back</a>
 
     @if(count($doctors) > 0)

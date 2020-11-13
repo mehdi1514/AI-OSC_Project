@@ -2,7 +2,9 @@
 
 @section('content')
     <br>
-    <a href="/appointments/create" class="btn btn-primary float-right">Book Appointment</a>
+    @if(!Auth::guest())
+        <a href="/appointments/create" class="btn btn-primary float-right">Book Appointment</a>
+    @endif
     <a href="/doctors" class="btn btn-default">Go Back</a>
     <h1 class="display-4">{{$doctor->name}}</h1>
     <p>{{$doctor->email}}</p>

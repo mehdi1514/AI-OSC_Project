@@ -10,7 +10,9 @@
         {{Form::submit('Submit', ['class' => 'btn btn-info'])}}
     {!! Form::close() !!}
 
-    <a href="/appointments/create" class="btn btn-primary float-right">Book Appointment</a>
+    @if(!Auth::guest())
+        <a href="/appointments/create" class="btn btn-primary float-right">Book Appointment</a>
+    @endif
 
     @if(count($doctors) > 0)
         @foreach ($doctors as $doctor)
