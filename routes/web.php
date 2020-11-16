@@ -25,3 +25,6 @@ Route::resource('appointments', 'AppointmentsController');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/pay', function(){
+    return view('payment');
+});
