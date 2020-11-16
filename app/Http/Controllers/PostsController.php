@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Doctor;
+use App\Models\User;
 use DB;
 
 class PostsController extends Controller
@@ -37,7 +39,24 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        // if(!auth()->user())
+        //     return redirect('/login')->with('error', 'You must first login or create an account to make an appointment!'); 
+
+        $user_id = auth()->user()->id;
+        $apps = DB::table('appointments')->where('user_id', '=', $user_id)->pluck('complete');
+        foreach($apps as $app)
+        {
+            if($app == 1)
+            {
+                $results = Doctor::all();
+                $doctors = array();
+                foreach($results as $result){
+                    $doctors[$result->id] = "Dr. " . $result->name . " (" . $result->specialization . ")";
+                }
+                return view('posts.create')->with('doctors', $doctors);
+            }
+        }
+        return redirect('/posts')->with('error', 'You must complete an appointment to give feedback!');
     }
 
     /**
@@ -57,9 +76,8 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
-        $d_name = $request->input('doctor');
-        $d_id = DB::table('doctors')->where('name', $d_name)->pluck('id');
-        $post->doctor_id = $d_id[0];
+        $doct_id = $request->input('doctor');
+        $post->doctor_id = $doct_id;
         $post->save();
 
         return redirect('/posts')->with('success', 'Feedback Given!');
