@@ -29,3 +29,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/pay', function(){
     return view('payment');
 });
+Route::get('/heart', function(){
+    return view('heart');
+});
