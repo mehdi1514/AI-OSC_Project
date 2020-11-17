@@ -32,3 +32,7 @@ Route::get('/pay', function(){
 Route::get('/heart', function(){
     return view('heart');
 });
+
+Route::get('/sendbasicemail','MailController@book_app');
+Route::get('/sendhtmlemail','MailController@update_app');
+Route::get('/sendattachmentemail','MailController@attachment_email');

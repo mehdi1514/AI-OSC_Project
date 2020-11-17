@@ -8,6 +8,7 @@ use DB;
 use App\Http\Controllers\Auth;
 use App\Models\User;
 use App\Models\Doctor;
+use Mail;
 
 class AppointmentsController extends Controller
 {
@@ -94,7 +95,15 @@ class AppointmentsController extends Controller
         $appointment->date = $app_date;
         $appointment->save();
 
-        return redirect('/appointments')->with('success', 'Appointment booked!');
+        $doc_name = DB::table('doctors')->where('id', '=', $doc_id)->pluck('name');
+        
+        $doc_name = strval($doc_name);
+        $app_time = strval($app_time);
+        $app_date = strval($app_date);
+        
+        app('App\Http\Controllers\MailController')->book_app($doc_name, $app_time, $app_date);
+
+        return redirect('/appointments')->with('success', 'Appointment booked and confirmation e-mail sent to your account!');
     }
 
     /**
@@ -150,6 +159,14 @@ class AppointmentsController extends Controller
         ];
     
         $this->validate($request, $rules, $customMessages);
+
+        $doc_id = $request->input('doctor');
+        $app_time = $request->input('time_slot');
+        $app_date = $request->input('date');
+        $appointment_taken = DB::table('appointments')->where('doctor_id', '=', $doc_id)->where('timeslot', '=', $app_time)->where('date', '=', $app_date)->get();
+        if(count($appointment_taken) > 0)
+            return redirect('/appointments')->with('error', 'That time slot has been taken!');
+
         $appointment = Appointment::find($id);
         $appointment->timeslot = $request->input('time_slot');
         $appointment->doctor_id = $request->input('doctor');
@@ -157,7 +174,13 @@ class AppointmentsController extends Controller
         $appointment->date = $request->input('date');
         $appointment->save();
 
-        return redirect('/appointments')->with('success', 'Successfully made changes to your appointment');
+        $doc_name = DB::table('doctors')->where('id', '=', $appointment->doctor_id)->pluck('name');
+        $doc_name = strval($doc_name);
+        $app_time = strval($appointment->timeslot);
+        $app_date = strval($appointment->date);
+        app('App\Http\Controllers\MailController')->update_app($doc_name, $appointment->timeslot, $appointment->date);
+
+        return redirect('/appointments')->with('success', 'Successfully made changes to your appointment and confirmation email sent!');
     }
 
     /**
